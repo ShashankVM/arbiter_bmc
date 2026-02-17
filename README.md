@@ -1,8 +1,17 @@
-## Formal Verification of Round Robin Arbiter
+# Formal Verification of Round Robin Arbiter
 
-Design file taken from https://github.com/bespoke-silicon-group/basejump_stl
+## Notes:
+- Design file taken from https://github.com/bespoke-silicon-group/basejump_stl
+- As there is an issue in HW-CBMC with parsing the design module, I used Yosys Slang to parse and then write to SystemVerilog file. This synthesized SystemVerilog file is then loaded into HW-CBMC and properties are proven on it.
+  
+## Properties
+- Fairness property on the the fairness of the Round Robin algorithm. This proves that there is no starvation for any requester.
+- Safety property that every request is granted within a round. A round is defined as a window of cycles equal to the number of requesters. Within a round, every requester has to be granted.
+- There should be no grant without its corresponding request.
+- Not more than 1 grant at any given time.
+- Cover properties to cover no requests and all requests high, to ensure our Formal environment does not prevent such behaviours from occuring.
 
-As there is an issue in HW-CBMC with parsing the design module, I used Yosys Slang to parse and then write to SystemVerilog file. This synthesized SystemVerilog file is then loaded into HW-CBMC and properties are proven on it.
+## Results
 ```
 ** Results:
 [top.assume_stable_valid_agent_1] always (disable iff (top.reset_i) $stable(top.agent_1) && top.agent_1 < top.NUM_REQUESTERS): ASSUMED
