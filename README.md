@@ -11,6 +11,9 @@
 - Not more than 1 grant at any given time.
 - Cover properties to cover no requests and all requests high, to ensure our Formal environment does not prevent such behaviours from occuring.
 
+## Run Command
+`ebmc --top top top.sv bsg_arb_round_robin_yosys.sv`
+
 ## Results
 ```
 ** Results:
