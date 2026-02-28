@@ -1,18 +1,29 @@
-# Formal Verification of Round Robin Arbiter
+# Formal Verification and Sign-off of Round Robin Arbiter
+                             By Shashank V M
+<div style="page-break-after: always;"></div>
 
-## Notes:
+
+## Background
+- Round Robin Arbiter is a device that arbitrates between multiple requesters and issues a single grant, based on a round robin scheme. Round robin refers to a scheme where the arbiter grants to requesters in a rotatory fashion, ensuring that all active requests are granted before repeat granting of a request to a single requester. A single instance of granting requests before repeat grant of a request is called a round.
+
+- Arbiters are classic designs that are exhaustively verified using Formal Property Verification. In Formal Property Verification, we write the properties the design has to satisfy and use a solver to find out if the design satisfies these properties.
+
 - Design file taken from https://github.com/bespoke-silicon-group/basejump_stl
-- As there is an issue in HW-CBMC with parsing the design module, I used Yosys Slang to parse and then write to SystemVerilog file. This synthesized SystemVerilog file is then loaded into HW-CBMC and properties are proven on it.
+ 
+<div style="page-break-after: always;"></div>
   
 ## Properties
 - Fairness property on the the fairness of the Round Robin algorithm. This proves that there is no starvation for any requester.
 - Safety property that every request is granted within a round. A round is defined as a window of cycles equal to the number of requesters. Within a round, every requester has to be granted.
 - There should be no grant without its corresponding request.
 - Not more than 1 grant at any given time.
-- Cover properties to cover no requests and all requests high, to ensure our Formal environment does not prevent such behaviours from occuring.
+- Cover properties to cover precondition, no requests and all requests high, to ensure our Formal environment does not prevent such behaviours from occuring.
+<div style="page-break-after: always;"></div>
 
-## Run Command
-`ebmc --top top top.sv bsg_arb_round_robin_yosys.sv`
+
+## Tool setup
+- Yosys Slang is used to parse and write to a SystemVerilog file, since it has very good support for SystemVerilog features. This SystemVerilog file is then loaded into HW-CBMC and properties are proven on it, since HW-CBMC has good support for SystemVerilog Assertions.
+- Run command: `ebmc --top top top.sv bsg_arb_round_robin_yosys.sv`
 
 ## Results
 ```
