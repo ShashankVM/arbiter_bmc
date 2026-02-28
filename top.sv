@@ -40,6 +40,9 @@ assert_safety: assert property (disable iff (reset_i) $rose(reqs_i[agent_1]) |->
 // No spurious grants
 assert_no_grant_without_request: assert property (disable iff (reset_i) (!reqs_i[agent_1]) |=> !grants_o[agent_1]);
 
+// No spurious grants, stronger form
+assert_no_grant_without_request_strong: assert property (disable iff (reset_i) (!reqs_i[agent_1][*NUM_REQUESTERS]) |=> !grants_o[agent_1]);
+
 // One and only one grant for a non-zero request
 assert_only_one_grant_for_non_zero_request: assert property (disable iff (reset_i) reqs_i |=> $onehot(grants_o));
 
@@ -48,5 +51,8 @@ cover property (!reqs_i);
 
 // cover all requests high
 cover property ($countones(reqs_i) == NUM_REQUESTERS);
+
+// cover precondition of fairness check
+cover property (agent_2_should_be_granted);
 
 endmodule
