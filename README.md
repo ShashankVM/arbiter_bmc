@@ -22,5 +22,4 @@
 [top.assert_only_one_grant_for_non_zero_request] always (disable iff (top.reset_i) top.reqs_i |=> $onehot(top.grants_o)): PROVED up to bound 100
 [top.cover.1] cover !top.reqs_i: PROVED
 [top.cover.2] cover $countones(top.reqs_i) == top.NUM_REQUESTERS: PROVED
-shashank@shashank-Latitude-3520:~/arbiter_bmc$ git status
 
